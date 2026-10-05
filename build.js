@@ -294,7 +294,46 @@ async function build() {
     footer(s, n);
   }
 
-  // 6. The Central Lead Register
+  // 6. Literature Review: Architecture Precedents
+  {
+    const s = pres.addSlide(); n++;
+    title(s, 'Literature Review: Architecture Precedents', 'BENCHMARKING & RESEARCH');
+    const patterns = [
+      ['FaBolt', 'Pattern 1', 'Ad-Hoc iPaaS', 'Zapier / Make',
+        ['Fast to prototype and easy to connect', 'Low upfront build effort', 'Wide catalogue of SaaS connectors'],
+        ['Logic fragments across many zaps/scenarios', 'Costs and limits grow with volume', 'Weak central governance and audit'] ],
+      ['FaBuilding', 'Pattern 2', 'Heavy Tier-1 CRM', 'Salesforce / HubSpot native',
+        ['Mature lead lifecycle and reporting', 'Strong enterprise controls and scale', 'Rich native sales features'],
+        ['High licence and implementation cost', 'Overbuilt for a focused consolidation MVP', 'Requires CRM adoption and migration'] ],
+      ['FaSitemap', 'Pattern 3', 'Centralised Power Platform Workflow', 'Our MVP Solution',
+        ['Central register and one governed workflow', 'Configurable rules with low-code ownership', 'Extends naturally across M365'],
+        ['Needs disciplined list and flow design', 'SharePoint has practical volume limits', 'Less CRM depth than a Tier-1 platform'] ],
+    ];
+    const gap = 0.3, cw = (CW - 2 * gap) / 3, y = 1.5, h = 4.5;
+    for (let i = 0; i < patterns.length; i++) {
+      const [ic, lab, nm, sub, pros, cons] = patterns[i];
+      const x = M + i * (cw + gap);
+      box(s, { x, y, w: cw, h, fill: { color: i === 2 ? C.TINT2 : C.WHITE }, line: { color: i === 2 ? C.TEAL : C.LINE, width: i === 2 ? 1.25 : 0.75 }, shadow: shadow() });
+      await iconCirc(s, ic, x + 0.3, y + 0.3, 0.7, i === 2 ? C.TEAL : C.MUTED);
+      txt(s, [
+        { text: lab.toUpperCase(), options: { fontSize: 11, bold: true, color: C.MUTED, charSpacing: 1, breakLine: true } },
+        { text: nm, options: { fontSize: 15, bold: true, color: C.TEAL } },
+      ], { x: x + 1.15, y: y + 0.28, w: cw - 1.3, h: 0.72, valign: 'middle' });
+      txt(s, sub, { x: x + 0.3, y: y + 1.18, w: cw - 0.6, h: 0.42, fontSize: 13, italic: true, color: C.MUTED, valign: 'middle' });
+      txt(s, 'PROS', { x: x + 0.3, y: y + 1.78, w: cw - 0.6, h: 0.25, fontSize: 10, bold: true, color: C.TEAL, charSpacing: 1 });
+      txt(s, bullets(pros), { x: x + 0.3, y: y + 2.08, w: cw - 0.55, h: 0.95, fontSize: 12, paraSpaceAfter: 3 });
+      txt(s, 'CONS', { x: x + 0.3, y: y + 3.15, w: cw - 0.6, h: 0.25, fontSize: 10, bold: true, color: C.AMBER_D, charSpacing: 1 });
+      txt(s, bullets(cons, { bullet: { indent: 14 }, color: C.INK }), { x: x + 0.3, y: y + 3.45, w: cw - 0.55, h: 0.85, fontSize: 12, paraSpaceAfter: 3 });
+    }
+    box(s, { x: M, y: 6.25, w: CW, h: 0.6, fill: { color: C.PETROL } });
+    txt(s, [
+      { text: 'Why this fits M365 enterprise teams   ', options: { bold: true, color: C.AMBER } },
+      { text: 'Central governance, familiar tools, existing identity and permissions, and a pragmatic upgrade path without introducing a new CRM.', options: { color: C.WHITE } },
+    ], { x: M + 0.25, y: 6.25, w: CW - 0.5, h: 0.6, fontSize: 13.5, valign: 'middle' });
+    footer(s, n);
+  }
+
+  // 7. The Central Lead Register
   {
     const s = pres.addSlide(); n++;
     title(s, 'The Central Lead Register');
@@ -341,7 +380,32 @@ async function build() {
     footer(s, n);
   }
 
-  // 7. Data Standardisation
+  // 8. Recommended Company Data Fields
+  {
+    const s = pres.addSlide(); n++;
+    title(s, 'Recommended Company Data Fields', 'DATA ARCHITECTURE · EXTENSIONS');
+    intro(s, 'Optional company attributes enrich B2B leads without slowing initial capture.', 1.38);
+    const rows = [
+      ['Company Registration No.', 'Text (optional)', 'Verifies the legal entity and supports reliable duplicate matching'],
+      ['Industry Classification', 'Choice (optional)', 'Enables segmentation, routing, and industry-level reporting'],
+      ['Headcount Bracket', 'Choice (optional)', 'Signals organisation size for prioritisation and qualification'],
+      ['Annual Turnover', 'Choice (optional)', 'Supports account tiering and commercial opportunity sizing'],
+      ['Billing Address', 'Multi-line (optional)', 'Supports territory assignment, invoicing, and regional reporting'],
+      ['Corporate Domain', 'Text (optional)', 'Links contacts to the organisation and strengthens email-domain matching'],
+      ['Decision Maker Tier', 'Choice (optional)', 'Identifies economic buyer, influencer, evaluator, or unknown'],
+      ['Parent / Group Company', 'Text (optional)', 'Connects subsidiaries and supports account-level roll-up reporting'],
+    ];
+    table(s, ['Field', 'Type', 'Business Justification'], rows, {
+      x: M, y: 1.72, w: CW, colW: [2.7, 2.05, CW - 4.75], fs: 12.5, hfs: 13, rowH: 0.43, hRowH: 0.42,
+      colOpts: [{ bold: true, color: C.PETROL }, {}, {}],
+    });
+    box(s, { x: M, y: 5.72, w: CW, h: 1.05, fill: { color: C.AMBER_T }, line: { color: C.AMBER, width: 1 } });
+    txt(s, labelDesc('Exception Queue enrichment', 'A lead is saved immediately with the company fields it has. Incomplete records are flagged for staff to research and confirm from approved sources; original values, enriched values, reviewer, and timestamp remain auditable.', 15, 12.5, C.AMBER_D, C.INK),
+      { x: M + 0.25, y: 5.84, w: CW - 0.5, h: 0.82, valign: 'middle', paraSpaceAfter: 4 });
+    footer(s, n);
+  }
+
+  // 9. Data Standardisation
   {
     const s = pres.addSlide(); n++;
     title(s, 'Data Standardisation', 'BUSINESS RULES  ·  1 OF 5');
@@ -370,7 +434,7 @@ async function build() {
     footer(s, n);
   }
 
-  // 8. Validation
+  // 10. Validation
   {
     const s = pres.addSlide(); n++;
     title(s, 'Validation', 'BUSINESS RULES  ·  2 OF 5');
@@ -407,7 +471,7 @@ async function build() {
     footer(s, n);
   }
 
-  // 9. Duplicate Detection
+  // 11. Duplicate Detection
   {
     const s = pres.addSlide(); n++;
     title(s, 'Duplicate Detection', 'BUSINESS RULES  ·  3 OF 5');
@@ -439,7 +503,7 @@ async function build() {
     footer(s, n);
   }
 
-  // 10. Lead Assignment
+  // 12. Lead Assignment
   {
     const s = pres.addSlide(); n++;
     title(s, 'Lead Assignment', 'BUSINESS RULES  ·  4 OF 5');
@@ -466,7 +530,7 @@ async function build() {
     footer(s, n);
   }
 
-  // 11. SLA Calculation
+  // 13. SLA Calculation
   {
     const s = pres.addSlide(); n++;
     title(s, 'SLA Calculation', 'BUSINESS RULES  ·  5 OF 5');
@@ -506,7 +570,7 @@ async function build() {
     footer(s, n);
   }
 
-  // 12. Notifications
+  // 14. Notifications
   {
     const s = pres.addSlide(); n++;
     title(s, 'Notifications, Reminders & SLA Tracking');
@@ -536,7 +600,7 @@ async function build() {
     footer(s, n);
   }
 
-  // 13. Exception Management
+  // 15. Exception Management
   {
     const s = pres.addSlide(); n++;
     title(s, 'Exception Management');
@@ -571,7 +635,7 @@ async function build() {
     footer(s, n);
   }
 
-  // 14. Management Dashboard
+  // 16. Management Dashboard
   {
     const s = pres.addSlide(); n++;
     title(s, 'Management Dashboard', 'DASHBOARDS & AUDIT HISTORY  ·  1 OF 2');
@@ -613,7 +677,7 @@ async function build() {
     footer(s, n);
   }
 
-  // 15. Audit History
+  // 17. Audit History
   {
     const s = pres.addSlide(); n++;
     title(s, 'Audit History', 'DASHBOARDS & AUDIT HISTORY  ·  2 OF 2');
@@ -658,7 +722,7 @@ async function build() {
     footer(s, n);
   }
 
-  // 16. Technology Stack
+  // 18. Technology Stack
   {
     const s = pres.addSlide(); n++;
     title(s, 'Technology Stack');
@@ -692,7 +756,7 @@ async function build() {
     footer(s, n);
   }
 
-  // 17. Success Metrics
+  // 19. Success Metrics
   {
     const s = pres.addSlide(); n++;
     title(s, 'Success Metrics');
@@ -724,7 +788,7 @@ async function build() {
     footer(s, n);
   }
 
-  // 18. Delivery Approach
+  // 20. Delivery Approach
   {
     const s = pres.addSlide(); n++;
     title(s, 'Delivery Approach');
@@ -753,7 +817,93 @@ async function build() {
     footer(s, n);
   }
 
-  // 19. Testing & Quality Assurance
+// 21. Project Delivery Gantt Chart
+  {
+    const s = pres.addSlide(); n++;
+    title(s, 'Project Delivery Gantt Chart', 'TIMELINE & MILESTONES');
+    intro(s, 'Ten weeks from discovery to production cutover, with a decision point at the end of every phase.', 1.35);
+
+    const labelX = M, labelW = 2.05, gridX = labelX + labelW, gridW = W - M - gridX, weekW = gridW / 10;
+    const headY = 1.88, rowY = 2.26, rowH = 0.52, rowGap = 0.08;
+
+    const phases = [
+      ['Discover', 'W1–2', 0, 2, C.TEAL, 'Requirements & intake confirmed'],
+      ['Design', 'W3–4', 2, 2, C.TEAL, 'Architecture & workflow approved'],
+      ['Build', 'W5–7', 4, 3, C.AMBER, 'Working MVP demonstrated'],
+      ['Test', 'W8–9', 7, 2, C.AMBER, 'UAT evidence completed'],
+      ['Deploy', 'W10', 9, 1, C.PETROL, 'Cutover'],
+    ];
+
+    // Header row
+    box(s, { x: labelX, y: headY, w: labelW, h: 0.38, fill: { color: C.PETROL } }, false);
+    txt(s, 'PHASE', { x: labelX + 0.15, y: headY, w: labelW - 0.3, h: 0.38, fontSize: 10, bold: true, color: C.WHITE, valign: 'middle', charSpacing: 1 });
+    for (let i = 0; i < 10; i++) {
+      const x = gridX + i * weekW;
+      box(s, { x, y: headY, w: weekW, h: 0.38, fill: { color: i % 2 ? C.TINT : C.TINT2 }, line: { color: C.WHITE, width: 0.75 } }, false);
+      txt(s, 'W' + (i + 1), { x, y: headY, w: weekW, h: 0.38, fontSize: 10.5, bold: true, color: C.PETROL, align: 'center', valign: 'middle' });
+    }
+
+    // Phase rows & timeline bars
+    phases.forEach(([name, weeks, start, length, color, output], i) => {
+      const y = rowY + i * (rowH + rowGap);
+      box(s, { x: labelX, y, w: labelW, h: rowH, fill: { color: C.TINT2 }, line: { color: C.LINE, width: 0.75 } }, false);
+      txt(s, [
+        { text: name + '  ', options: { bold: true, fontSize: 13, color: C.PETROL } },
+        { text: weeks, options: { fontSize: 11, color: C.MUTED } },
+      ], { x: labelX + 0.15, y, w: labelW - 0.3, h: rowH, valign: 'middle' });
+
+      for (let j = 0; j < 10; j++) {
+        box(s, { x: gridX + j * weekW, y, w: weekW, h: rowH, fill: { color: j % 2 ? C.WHITE : C.TINT2 }, line: { color: C.LINE, width: 0.5 } }, false);
+      }
+
+      const barX = gridX + start * weekW + 0.05, barW = length * weekW - 0.1;
+      const barH = rowH - 0.14;
+      box(s, { x: barX, y: y + 0.07, w: barW, h: barH, fill: { color }, line: { type: 'none' } });
+      txt(s, output, {
+        x: barX + 0.08,
+        y: y + 0.07,
+        w: barW - 0.16,
+        h: barH,
+        fontSize: length === 1 ? 9.5 : 10.5,
+        bold: true,
+        color: C.WHITE,
+        align: length === 1 ? 'center' : 'left',
+        valign: 'middle',
+        fit: 'shrink'
+      });
+    });
+
+    // Milestones section
+    const mileLabelY = 5.42;
+    const mileCardY = 5.72;
+    const mileGap = 0.16;
+    const mileW = (CW - 4 * mileGap) / 5;
+    const mileH = 0.95;
+
+    txt(s, 'KEY MILESTONES', { x: M, y: mileLabelY, w: 4, h: 0.25, fontSize: 10, bold: true, color: C.TEAL, charSpacing: 1.5 });
+
+    const milestones = [
+      ['W2', 'Requirements Sign-Off', C.TEAL],
+      ['W4', 'Architecture Freeze', C.TEAL],
+      ['W7', 'Alpha Build', C.AMBER],
+      ['W9', 'UAT Sign-off', C.AMBER],
+      ['W10', 'Production Cutover', C.PETROL],
+    ];
+
+    milestones.forEach(([week, label, color], i) => {
+      const x = M + i * (mileW + mileGap);
+      box(s, { x, y: mileCardY, w: mileW, h: mileH, fill: { color: C.WHITE }, line: { color: C.LINE, width: 0.75 }, shadow: shadow() });
+      box(s, { x, y: mileCardY, w: mileW, h: 0.06, fill: { color } }, false);
+      txt(s, [
+        { text: week + '\n', options: { fontSize: 11, bold: true, color, breakLine: true } },
+        { text: label, options: { fontSize: 11.5, bold: true, color: C.PETROL } },
+      ], { x: x + 0.14, y: mileCardY + 0.12, w: mileW - 0.28, h: mileH - 0.18, valign: 'middle' });
+    });
+
+    footer(s, n);
+  }
+
+  // 22. Testing & Quality Assurance
   {
     const s = pres.addSlide(); n++;
     title(s, 'Testing & Quality Assurance');
@@ -791,7 +941,7 @@ async function build() {
     footer(s, n);
   }
 
-  // 20. Documentation & Handover
+  // 23. Documentation & Handover
   {
     const s = pres.addSlide(); n++;
     title(s, 'Documentation & Handover');
@@ -833,7 +983,7 @@ async function build() {
     footer(s, n);
   }
 
-  // 21. Team Roles
+  // 24. Team Roles
   {
     const s = pres.addSlide(); n++;
     title(s, 'Team Roles');
@@ -876,7 +1026,7 @@ async function build() {
     footer(s, n);
   }
 
-  // 22. Roles by Phase
+  // 25. Roles by Phase
   {
     const s = pres.addSlide(); n++;
     title(s, 'Roles by Phase');
@@ -895,7 +1045,7 @@ async function build() {
     footer(s, n);
   }
 
-  // 23. Key Assumptions
+  // 26. Key Assumptions
   {
     const s = pres.addSlide(); n++;
     title(s, 'Key Assumptions', 'RISKS & ASSUMPTIONS  ·  1 OF 2');
@@ -915,7 +1065,7 @@ async function build() {
     footer(s, n);
   }
 
-  // 24. Risks & Mitigations
+  // 27. Risks & Mitigations
   {
     const s = pres.addSlide(); n++;
     title(s, 'Risks & Mitigations', 'RISKS & ASSUMPTIONS  ·  2 OF 2');
