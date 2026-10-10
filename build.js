@@ -117,7 +117,7 @@ async function build() {
     for (let i = 0; i < 8; i++) {
       s.addShape(pres.shapes.OVAL, { x: 0.8 + i * step, y: cy, w: d, h: d, fill: { color: i === 7 ? C.AMBER : C.TEAL }, line: { color: '5FB3C2', width: 1.5 } });
     }
-    txt(s, 'Chin Yung Xuan   ·   Loo Si Jie   ·   Teo Jing Ying', { x: 0.8, y: 5.7, w: 11, h: 0.45, fontSize: 18, color: C.WHITE, valign: 'middle' });
+    txt(s, 'Goh Xin Ni   ·   Loo Si Jie   ·   Teo Jing Ying', { x: 0.8, y: 5.7, w: 11, h: 0.45, fontSize: 18, color: C.WHITE, valign: 'middle' });
   }
 
   // 2. Problem & Pain Points
