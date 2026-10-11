@@ -988,21 +988,21 @@ async function build() {
     const s = pres.addSlide(); n++;
     title(s, 'Team Roles');
     const roles = [
-      ['A', 'Business Analyst', 'Client-Facing Lead', [
+      ['A', 'Loo Si Jie', 'Business Analyst', [
         'Discovery workshops and requirements pack',
         'Field dictionary and logical data model',
         'Power BI dashboard and row-level security',
         'UAT sessions and test evidence pack',
         'Handover pack and end-user training',
         'Client communication, backlog, and scope control']],
-      ['B', 'Tech Lead', null, [
+      ['B', 'Goh Xin Ni', 'Tech Lead', [
         'Solution architecture and environment setup',
         'SharePoint lists, permissions, and Audit Log',
         'Power Apps canvas app and Exception Queue',
         'Assignment engine, SLA timers, and escalations',
         'Flow-failure alerts and production deployment',
         'Admin guide and admin training']],
-      ['C', 'Integration & QA Lead', null, [
+      ['C', 'Teo Jing Ying', 'Integration & QA Lead', [
         'Microsoft Forms and email intake flows',
         'Standardisation, validation, and duplicate detection',
         'Duplicate rule tuning',
@@ -1011,18 +1011,17 @@ async function build() {
         'Peer review of Tech Lead flows']],
     ];
     const gap = 0.3, cw = (CW - 2 * gap) / 3, y = 1.5, h = 5.4;
-    roles.forEach(([L, nm, sub, bl], i) => {
-      const x = M + i * (cw + gap);
-      box(s, { x, y, w: cw, h, fill: { color: C.WHITE }, line: { color: C.LINE, width: 0.75 }, shadow: shadow() });
-      circ(s, x + 0.3, y + 0.3, 0.75, C.TEAL, L, { fontSize: 28, fontFace: TF });
-      txt(s, [
-        { text: 'ROLE ' + L, options: { fontSize: 11, bold: true, color: C.MUTED, charSpacing: 1, breakLine: true } },
-        { text: nm, options: { fontSize: 17, bold: true, color: C.PETROL } },
-      ], { x: x + 1.2, y: y + 0.28, w: cw - 1.35, h: 0.8, valign: 'middle' });
-      if (sub) txt(s, sub, { x: x + 0.3, y: y + 1.2, w: cw - 0.6, h: 0.35, fontSize: 13, bold: true, italic: true, color: C.TEAL, valign: 'middle' });
-      hline(s, x + 0.3, y + 1.65, cw - 0.6, C.LINE, 0.75);
-      txt(s, bullets(bl), { x: x + 0.3, y: y + 1.85, w: cw - 0.55, h: h - 2.0, fontSize: 14.5, paraSpaceAfter: 10 });
-    });
+    roles.forEach(([L, person, nm, bl], i) => {
+  const x = M + i * (cw + gap);
+  box(s, { x, y, w: cw, h, fill: { color: C.WHITE }, line: { color: C.LINE, width: 0.75 }, shadow: shadow() });
+  circ(s, x + 0.3, y + 0.3, 0.75, C.TEAL, L, { fontSize: 28, fontFace: TF });
+  txt(s, [
+    { text: person.toUpperCase(), options: { fontSize: 11, bold: true, color: C.MUTED, charSpacing: 1, breakLine: true } },
+    { text: nm, options: { fontSize: 17, bold: true, color: C.PETROL } },
+  ], { x: x + 1.2, y: y + 0.28, w: cw - 1.35, h: 0.8, valign: 'middle' });
+  hline(s, x + 0.3, y + 1.3, cw - 0.6, C.LINE, 0.75);
+  txt(s, bullets(bl), { x: x + 0.3, y: y + 1.5, w: cw - 0.55, h: h - 1.65, fontSize: 14.5, paraSpaceAfter: 10 });
+});
     footer(s, n);
   }
 
