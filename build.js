@@ -367,7 +367,7 @@ async function build() {
       ['Assigned Owner', 'Person (auto)', 'Set by the assignment engine'],
       ['Assignment Date', 'DateTime (auto)', 'When ownership was set'],
       ['SLA Due', 'DateTime (auto)', 'Assignment Date + SLA hours'],
-      ['Status', 'Choice (auto)', 'New, Assigned, In Progress, Contacted, Qualified, Closed – Won, Closed – Lost'],
+      ['Status', 'Choice', 'New, Assigned, Contacted, Qualified, Closed – Won, Closed – Lost'],
       ['SLA State', 'Choice (auto)', 'On Track, Approaching, Breached'],
       ['Duplicate Flag', 'Choice (auto)', 'None, Suspected, Confirmed'],
       ['Duplicate Of', 'Lookup (auto)', 'Link to the master lead'],
